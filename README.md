@@ -1,4 +1,4 @@
-# redux-saga-cart
+# shopping-cart-client
 A fully-functional shopping cart built with Redux Saga using Yield
 
 ## About
