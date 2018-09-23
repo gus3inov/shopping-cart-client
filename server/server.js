@@ -6,15 +6,16 @@ import webpackConfig from './../webpack.config'
 import webpackDevMiddleware from 'webpack-dev-middleware';
 const compiler = webpack(webpackConfig);
 import webpackHotMiddleware from "webpack-hot-middleware";
-
-import  socketIO from 'socket.io'
+import socketIO from 'socket.io';
 
 let app = express();
+
 app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
     publicPath: webpackConfig.output.publicPath,
     inline:true
 }));
+
 app.use(webpackHotMiddleware(compiler, {
     'log': false,
     'path': '/__webpack_hmr',
@@ -25,9 +26,7 @@ app.use(cors());
 const server = http.createServer(app);
 const io = socketIO(server);
 
-
-
-io.on('connection',(connection)=>{
+io.on('connection',(connection) => {
     let supportAvailable = false;
     setInterval(()=>{
         supportAvailable = !supportAvailable;
