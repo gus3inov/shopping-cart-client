@@ -6,6 +6,7 @@ import {
     SET_CART_ITEMS,
     INCREASE_ITEM_QUANTITY,
     DECREASE_ITEM_QUANTITY,
+
     FETCHING, 
     FETCHED,
     setShippingCost,
@@ -18,7 +19,7 @@ import {
 function* shipping() {
     yield put(setShippingFetchStatus(FETCHING));
     const items = yield select(cartItemsSelector);
- 
+
     const itemRequestString = items.reduce((string, item) => {
         for(let i = 0; i < item.get('quantity'); i++) {
             string += `${item.get(`id`)},`;
@@ -30,6 +31,7 @@ function* shipping() {
     console.info('Made item request string', itemRequestString);
 
     const response = yield fetch(`${apiUrl}/shipping/${itemRequestString}`);
+
     const { total } = yield response.json();
     yield put(setShippingCost(total));
     yield put(setShippingFetchStatus(FETCHED));
