@@ -13,7 +13,7 @@ let app = express();
 app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
     publicPath: webpackConfig.output.publicPath,
-    inline:true
+    inline: true
 }));
 
 app.use(webpackHotMiddleware(compiler, {
@@ -26,17 +26,17 @@ app.use(cors());
 const server = http.createServer(app);
 const io = socketIO(server);
 
-io.on('connection',(connection) => {
+io.on('connection', (connection) => {
     let supportAvailable = false;
-    setInterval(()=>{
+    setInterval(() => {
         supportAvailable = !supportAvailable;
         connection.emit(supportAvailable ? `SUPPORT_AVAILABLE` : `SUPPORT_NOT_AVAILABLE`);
-    },10000);
+    }, 10000);
 });
 
 app.use(express.static('public'));
 app.use(express.static('public/css'));
 const port = process.env.PORT || 8080;
-server.listen(port,()=>{
+server.listen(port, () => {
     console.info(`Redux Server is listening on port ${port}.`);
 });
